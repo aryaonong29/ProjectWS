@@ -14,8 +14,7 @@
         android:background="@drawable/background0">
 
         <com.rey.material.widget.TextView
-            style="@style/tvLogin"
-            android:text="Login Page" />
+            style="@style/tvRegister" />
 
     </LinearLayout>
 
@@ -25,6 +24,16 @@
         android:layout_weight="1"
         android:background="@drawable/background1"
         android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/etName">
+
+            <com.rey.material.widget.EditText
+                android:id="@+id/etName"
+                style="@style/etName"/>
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <android.support.design.widget.TextInputLayout
             style="@style/etEmail">
@@ -44,6 +53,15 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            style="@style/etConfPassword">
+
+            <com.rey.material.widget.EditText
+                android:id="@+id/etConfPassword"
+                style="@style/etConfPassword"/>
+
+        </android.support.design.widget.TextInputLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -53,13 +71,10 @@
         android:background="@drawable/background2"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnLogin"
-            style="@style/BtnLogin"/>
+        <com.rey.material.widget.Button
+            android:id="@+id/btnReg"
+            style="@style/BtnReg"/>
 
-        <com.rey.material.widget.TextView
-            android:id="@+id/tv_reg"
-            style="@style/tvReg" />
 
     </LinearLayout>
 

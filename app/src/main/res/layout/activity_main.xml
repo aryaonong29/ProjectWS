@@ -14,8 +14,7 @@
         android:background="@drawable/background0">
 
         <com.rey.material.widget.TextView
-            style="@style/tvLogin"
-            android:text="Login Page" />
+            style="@style/tvLogin" />
 
     </LinearLayout>
 

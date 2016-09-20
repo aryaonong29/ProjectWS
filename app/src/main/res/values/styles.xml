@@ -34,7 +34,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-
     <style name="etEmail">
         <item name="android:layout_width">250dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -72,6 +71,86 @@
         <item name="android:text">Register</item>
         <item name="android:textAlignment">center</item>
         <item name="android:onClick">register</item>
+        <item name="android:linksClickable">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+    <style name="tvRegister">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">Register Page</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">40dp</item>
+        <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="etName">
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:hint">Name</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+
+    <style name="etConfPassword">
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:hint">Confirm Password</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+    <style name="BtnReg">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:text">Register</item>
+    </style>
+
+    <style name="tvHome">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">Home Page</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">40dp</item>
+        <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="tvGreeting">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">Welcome, User</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_below">@id/tvhome</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">40dp</item>
+        <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="tvLogout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:text">Logout</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_below">@id/tvgreet</item>
+        <item name="android:onClick">logout</item>
         <item name="android:linksClickable">true</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorHint">@color/white</item>

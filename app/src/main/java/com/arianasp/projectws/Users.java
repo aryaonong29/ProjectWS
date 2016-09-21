@@ -1,6 +1,10 @@
 package com.arianasp.projectws;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
+
+
 
 /**
  * Created by mycomputer on 20/09/16.
@@ -8,7 +12,7 @@ import java.util.List;
 
 public class Users {
 
-    @serializedName(“users”)
+    @SerializedName("users")
     public List<UserItem> users;
     public List<UserItem> getUsers() { return users; }
     public void setUsers(List<UserItem> users) { this.users = users; }

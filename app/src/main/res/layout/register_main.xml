@@ -26,39 +26,39 @@
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
-            style="@style/etName">
+            style="@style/regEtName">
 
             <com.rey.material.widget.EditText
-                android:id="@+id/etName"
-                style="@style/etName"/>
+                android:id="@+id/regEtName"
+                style="@style/regEtName"/>
 
         </android.support.design.widget.TextInputLayout>
 
 
         <android.support.design.widget.TextInputLayout
-            style="@style/etEmail">
+            style="@style/regEtEmail">
 
             <com.rey.material.widget.EditText
-                android:id="@+id/et1"
-                style="@style/etEmail"/>
+                android:id="@+id/regEtEmail"
+                style="@style/regEtEmail"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            style="@style/etPassword">
+            style="@style/regEtPassword">
 
             <com.rey.material.widget.EditText
-                android:id="@+id/et2"
-                style="@style/etPassword"/>
+                android:id="@+id/regEtPassword"
+                style="@style/regEtPassword"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            style="@style/etConfPassword">
+            style="@style/regEtConfPassword">
 
             <com.rey.material.widget.EditText
-                android:id="@+id/etConfPassword"
-                style="@style/etConfPassword"/>
+                android:id="@+id/regEtConfPassword"
+                style="@style/regEtConfPassword"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -73,7 +73,7 @@
 
         <com.rey.material.widget.Button
             android:id="@+id/btnReg"
-            style="@style/BtnReg"/>
+            style="@style/regBtn"/>
 
 
     </LinearLayout>

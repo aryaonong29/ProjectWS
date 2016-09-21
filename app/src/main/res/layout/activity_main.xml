@@ -26,20 +26,20 @@
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
-            style="@style/etEmail">
+            style="@style/homeEtEmail">
 
             <com.rey.material.widget.EditText
-                android:id="@+id/et1"
-                style="@style/etEmail"/>
+                android:id="@+id/homeEtEmail"
+                style="@style/homeEtEmail"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            style="@style/etPassword">
+            style="@style/homeEtPassword">
 
             <com.rey.material.widget.EditText
-                android:id="@+id/et2"
-                style="@style/etPassword"/>
+                android:id="@+id/homeEtPassword"
+                style="@style/homeEtPassword"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -53,8 +53,8 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnLogin"
-            style="@style/BtnLogin"/>
+            android:id="@+id/homeBtnLogin"
+            style="@style/homeBtnLogin"/>
 
         <com.rey.material.widget.TextView
             android:id="@+id/tv_reg"

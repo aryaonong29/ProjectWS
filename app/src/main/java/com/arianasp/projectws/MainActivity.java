@@ -13,22 +13,22 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     Button btnSignIn;
     LoginDBAdapter loginDataBaseAdapter;
-    com.rey.material.widget.TextView tvRegis;
+    TextView tvRegis;
 
     TextView tv_respond, tv_result_api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content);
+        setContentView(R.layout.activity_main);
 
         // create a instance of SQLite Database
         loginDataBaseAdapter=new LoginDBAdapter(this);
         loginDataBaseAdapter=loginDataBaseAdapter.open();
 
         // Get The Refference Of Buttons
-        btnSignIn=(Button)findViewById(R.id.homeBtnLogin);
-        tvRegis = (com.rey.material.widget.TextView)findViewById(R.id.tv_reg);
+        btnSignIn=(Button) findViewById(R.id.homeBtnLogin);
+        tvRegis = (TextView)findViewById(R.id.tv_reg);
 
         // Set OnClick Listener on SignUp button
         tvRegis.setOnClickListener(new View.OnClickListener() {
@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.setTitle("Login");
 
         // get the Refferences of views
-        final EditText editTextUserEmail=(EditText)dialog.findViewById(R.id.homeEtEmail);
-        final  EditText editTextPassword=(EditText)dialog.findViewById(R.id.homeEtPassword);
+        final EditText editTextUserEmail=(EditText) dialog.findViewById(R.id.homeEtEmail);
+        final  EditText editTextPassword=(EditText) dialog.findViewById(R.id.homeEtPassword);
 
         Button btnSignIn=(Button)dialog.findViewById(R.id.homeBtnLogin);
 
@@ -120,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                     Toast.makeText(MainActivity.this, "Congrats: Login Successfull", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    Intent ihome=new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(ihome);
                 }
                 else
                 {

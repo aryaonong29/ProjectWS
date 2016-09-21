@@ -13,16 +13,16 @@
         android:layout_weight="2"
         android:gravity="center">
 
-        <com.rey.material.widget.TextView
+        <TextView
             android:id="@+id/tvhome"
             style="@style/tvHome" />
 
-        <com.rey.material.widget.TextView
+        <TextView
             android:id="@+id/tvgreet"
 
             style="@style/tvGreeting" />
 
-        <com.rey.material.widget.TextView
+        <TextView
             android:id="@+id/tvlogout"
             style="@style/tvLogout"/>
 

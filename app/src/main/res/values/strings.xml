@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ProjectWS</string>
+    <string name="invalidEmail">Invalid Email</string>
+    <string name="invalidName">Invalid Name</string>
 </resources>

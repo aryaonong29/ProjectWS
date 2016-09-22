@@ -7,11 +7,39 @@ package com.arianasp.projectws;
 public class User {
 
     private int id;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name;
     private String email;
     private String password;
+
+    public String getConfirmpassword() {
+        return confirmpassword;
+    }
+
+    public void setConfirmpassword(String confirmpassword) {
+        this.confirmpassword = confirmpassword;
+    }
+
+    private String confirmpassword;
     private String token_auth;
     private String created_at;
     private String updated_at;
+
+    public User(String name, String email, String password,String confirmpassword) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.confirmpassword = confirmpassword;
+
+    }
 
     public int getId() {
         return id;

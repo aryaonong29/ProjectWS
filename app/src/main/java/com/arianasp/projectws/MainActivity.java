@@ -1,142 +1,129 @@
 package com.arianasp.projectws;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
-    Button btnSignIn;
-    LoginDBAdapter loginDataBaseAdapter;
-    TextView tvRegis;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-    TextView tv_respond, tv_result_api;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView tv_reg;
+
+    EditText homeEtEmail, homeEtPassword;
+
+    Button homeBtnLogin;
+    boolean doubleBackToExitPressedOnce = false, login;
+    AwesomeValidation mAwesomeValidation = new AwesomeValidation(BASIC);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // create a instance of SQLite Database
-        loginDataBaseAdapter=new LoginDBAdapter(this);
-        loginDataBaseAdapter=loginDataBaseAdapter.open();
-
-        // Get The Refference Of Buttons
-        btnSignIn=(Button) findViewById(R.id.homeBtnLogin);
-        tvRegis = (TextView)findViewById(R.id.tv_reg);
-
-        // Set OnClick Listener on SignUp button
-        tvRegis.setOnClickListener(new View.OnClickListener() {
+        tv_reg = (TextView)findViewById(R.id.tv_reg);
+        homeEtEmail=(EditText)findViewById(R.id.homeEtEmail);
+        homeEtPassword=(EditText)findViewById(R.id.homeEtPassword);
+        mAwesomeValidation.addValidation(MainActivity.this, R.id.homeEtEmail, Patterns.EMAIL_ADDRESS,R.string.invalidEmail);
+        homeBtnLogin=(Button)findViewById(R.id.homeBtnLogin);
+        homeBtnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-
-                /// Create Intent for SignUpActivity  abd Start The Activity
-                Intent intentRegister=new Intent(getApplicationContext(),RegisterActivity.class);
-                startActivity(intentRegister);
+                if (!mAwesomeValidation.validate()) {
+                    homeEtEmail.requestFocus();
+                } else {
+                    getApi();
+                }
             }
         });
-
-//        tv_respond = (TextView)findViewById(R.id.tv_respond);
-//        tv_result_api = (TextView)findViewById(R.id.tv_result_api);
-//
-//        Gson gson = new GsonBuilder()
-//                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-//                .create();
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://private-bb8c7-tryretrofit.apiary-mock.com/users/")
-//                .addConverterFactory(GsonConverterFactory.create(gson))
-//                .build();
-//
-//        UserApi user_api = retrofit.create(UserApi.class);
-//
-//        // // implement interface for get all user
-//        Call<Users> call = user_api.getUsers();
-//        call.enqueue(new Callback<Users>() {
-//
-//            @Override
-//            public void onResponse(Call<Users> call, Response<Users> response) {
-//                int status = response.code();
-//                tv_respond.setText(String.valueOf(status));
-//                tv_result_api.setText("");
-//                //this extract data from retrofit with for() loop
-//                for(Users.UserItem user : response.body().getUsers()) {
-//                    tv_result_api.append(
-//                            "Id = " + String.valueOf(user.getId()) +
-//                                    System.getProperty("line.separator") +
-//                                    "Email = " + user.getEmail() +
-//                                    System.getProperty("line.separator") +
-//                                    "Password = " + user.getPassword() +
-//                                    System.getProperty("line.separator") +
-//                                    "Token Auth = " + user.getToken_auth() +
-//                                    System.getProperty("line.separator") +
-//                                    "Created at = " + user.getCreated_at() +
-//                                    System.getProperty("line.separator") +
-//                                    "Updated at = " + user.getUpdated_at() +
-//                                    System.getProperty("line.separator") +
-//                                    System.getProperty("line.separator")
-//                    );
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Users> call, Throwable t) {
-//                tv_respond.setText(String.valueOf(t));
-//            }
-//        });
     }
 
-    // Methos to handleClick Event of Sign In Button
-    public void signIn(View V)
-    {
-        final Dialog dialog = new Dialog(MainActivity.this);
-        dialog.setContentView(R.layout.activity_main);
-        dialog.setTitle("Login");
-
-        // get the Refferences of views
-        final EditText editTextUserEmail=(EditText) dialog.findViewById(R.id.homeEtEmail);
-        final  EditText editTextPassword=(EditText) dialog.findViewById(R.id.homeEtPassword);
-
-        Button btnSignIn=(Button)dialog.findViewById(R.id.homeBtnLogin);
-
-        // Set On ClickListener
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // get The User email and Password
-                String userEmail=editTextUserEmail.getText().toString();
-                String password=editTextPassword.getText().toString();
-
-                // fetch the Password form database for respective user name
-                String storedPassword=loginDataBaseAdapter.getSinlgeEntry(userEmail);
-
-                // check if the Stored password matches with  Password entered by user
-                if(password.equals(storedPassword))
-                {
-                    Toast.makeText(MainActivity.this, "Congrats: Login Successfull", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                    Intent ihome=new Intent(getApplicationContext(),MainActivity.class);
-                    startActivity(ihome);
-                }
-                else
-                {
-                    Toast.makeText(MainActivity.this, "Email or Password does not match", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        dialog.show();
+    public void registerAccount(View v){
+        Intent i=new Intent();
+        i.setClass(this,RegisterActivity.class);
+        startActivity(i);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Close The Database
-        loginDataBaseAdapter.close();
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
+
+    private void getApi(){
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://private-f6513-login312.apiary-mock.com/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        UserApi user_api = retrofit.create(UserApi.class);
+
+        // // implement interface for get all user
+        Call<Users> call = user_api.getUsers();
+        call.enqueue(new Callback<Users>() {
+
+            @Override
+            public void onResponse(Call<Users> call, Response<Users> response) {
+//                int status = response.code();
+//                tv_reg.setText(String.valueOf(status));
+                Log.e("CEK", response.body().getUsers().toArray().toString());
+                //this extract data from retrofit with for() loop
+                for (Users.UserItem user : response.body().getUsers()) {
+                    Log.e("CEK", String.valueOf(user.getEmail().toString().equals(homeEtEmail.getText().toString())));
+                    Log.e("CEK", user.getEmail().toString());
+                    Log.e("CEK", homeEtEmail.getText().toString());
+                    login = false;
+                    if (user.getEmail().toString().equals(homeEtEmail.getText().toString()) &&
+                            user.getPassword().toString().equals(homeEtPassword.getText().toString())) {
+                        login = true;
+                        Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(i);
+                        finish();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Users> call, Throwable t) {
+                tv_reg.setText(String.valueOf(t));
+            }
+        });
+    }
+
 }

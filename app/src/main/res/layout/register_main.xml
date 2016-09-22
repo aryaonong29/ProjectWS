@@ -75,6 +75,10 @@
             android:id="@+id/btnReg"
             style="@style/regBtn"/>
 
+        <TextView
+            android:id="@+id/tv_back"
+            style="@style/tvBack"/>
+
 
     </LinearLayout>
 

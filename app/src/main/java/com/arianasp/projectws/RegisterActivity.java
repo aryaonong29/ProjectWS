@@ -1,6 +1,8 @@
 package com.arianasp.projectws;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -28,11 +30,15 @@ import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
 public class RegisterActivity extends Activity
 {
+//    public static final String MyPREFERENCES = "MyPrefs" ;
+//    public static final String Email = "emailKey";
+//    public static final String Password = "pwdKey";
     AwesomeValidation mAwesomeValidation = new AwesomeValidation(BASIC);
-    TextView tv_reg;
+    TextView tv_reg,tvBack;
     EditText editTextUserName,editTextUserEmail,editTextPassword,editTextConfirmPassword;
     Button btnRegister;
     String userName,email,password,confirmPassword;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,8 +53,11 @@ public class RegisterActivity extends Activity
         editTextUserEmail =(EditText)findViewById(R.id.regEtEmail);
         editTextPassword=(EditText)findViewById(R.id.regEtPassword);
         editTextConfirmPassword=(EditText)findViewById(R.id.regEtConfPassword);
+        tvBack=(TextView)findViewById(R.id.tv_back);
 
         btnRegister=(Button)findViewById(R.id.btnReg);
+//        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -58,6 +67,12 @@ public class RegisterActivity extends Activity
                 email=editTextUserEmail.getText().toString();
                 password=editTextPassword.getText().toString();
                 confirmPassword=editTextConfirmPassword.getText().toString();
+
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("Email", email).putString("Password", password);
+                editor.commit();
+                Log.e("tes1", String.valueOf(editor.putString("Email", email)));
+                Log.e("tes2", String.valueOf(editor.putString("Password", password)));
 
                 // check if any of the fields are vaccant
                 if (!mAwesomeValidation.validate()) {
@@ -75,6 +90,12 @@ public class RegisterActivity extends Activity
                 }
             }
         });
+    }
+
+    public void backHome(View v){
+        Intent i=new Intent();
+        i.setClass(this,MainActivity.class);
+        startActivity(i);
     }
 
     protected boolean validatePass1(String pass1) {

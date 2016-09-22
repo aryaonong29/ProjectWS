@@ -1,6 +1,8 @@
 package com.arianasp.projectws;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -25,14 +27,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
 public class MainActivity extends AppCompatActivity {
-
+//    public static final String MyPREFERENCES = "MyPrefs" ;
+//    public static final String Email = "emailKey";
+//    public static final String Password = "pwdKey";
     TextView tv_reg;
-
+//    String email,password;
     EditText homeEtEmail, homeEtPassword;
 
     Button homeBtnLogin;
     boolean doubleBackToExitPressedOnce = false, login;
     AwesomeValidation mAwesomeValidation = new AwesomeValidation(BASIC);
+    SharedPreferences sp1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +49,21 @@ public class MainActivity extends AppCompatActivity {
         homeEtPassword=(EditText)findViewById(R.id.homeEtPassword);
         mAwesomeValidation.addValidation(MainActivity.this, R.id.homeEtEmail, Patterns.EMAIL_ADDRESS,R.string.invalidEmail);
         homeBtnLogin=(Button)findViewById(R.id.homeBtnLogin);
+        sp1 = this.getSharedPreferences("Login", 0);
+
         homeBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SharedPreferences sp2 = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                String email=sp1.getString("Email", null);
+                String password=sp1.getString("Password",null);
+
+                SharedPreferences.Editor editor = sp1.edit();
+                editor.putString("Email", email).putString("Password", password);
+                editor.commit();
+//                Log.e("tes1", String.valueOf(editor.putString(Email, email)));
+//                Log.e("tes2", String.valueOf(editor.putString(Password, password)));
                 if (!mAwesomeValidation.validate()) {
                     homeEtEmail.requestFocus();
                 } else {

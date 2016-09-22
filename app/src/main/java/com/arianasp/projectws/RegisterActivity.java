@@ -68,11 +68,11 @@ public class RegisterActivity extends Activity
                 password=editTextPassword.getText().toString();
                 confirmPassword=editTextConfirmPassword.getText().toString();
 
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("Email", email).putString("Password", password);
-                editor.commit();
-                Log.e("tes1", String.valueOf(editor.putString("Email", email)));
-                Log.e("tes2", String.valueOf(editor.putString("Password", password)));
+//                SharedPreferences.Editor editor = sp.edit();
+//                editor.putString("Email", email).putString("Password", password);
+//                editor.commit();
+//                Log.e("tes1", String.valueOf(editor.putString("Email", email)));
+//                Log.e("tes2", String.valueOf(editor.putString("Password", password)));
 
                 // check if any of the fields are vaccant
                 if (!mAwesomeValidation.validate()) {

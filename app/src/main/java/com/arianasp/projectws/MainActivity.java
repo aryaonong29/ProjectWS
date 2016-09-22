@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sp1.edit();
                 editor.putString("Email", email).putString("Password", password);
                 editor.commit();
-//                Log.e("tes1", String.valueOf(editor.putString(Email, email)));
-//                Log.e("tes2", String.valueOf(editor.putString(Password, password)));
+                Log.e("tes1", String.valueOf(editor.putString("Email", email)));
+                Log.e("tes2", String.valueOf(editor.putString("Password", password)));
                 if (!mAwesomeValidation.validate()) {
                     homeEtEmail.requestFocus();
                 } else {

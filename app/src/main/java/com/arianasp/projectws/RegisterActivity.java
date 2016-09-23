@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -34,7 +33,8 @@ public class RegisterActivity extends Activity
 //    public static final String MyPREFERENCES = "MyPrefs" ;
 //    public static final String Email = "emailKey";
 //    public static final String Password = "pwdKey";
-    AwesomeValidation valid = new AwesomeValidation(BASIC);
+    AwesomeValidation valid1 = new AwesomeValidation(BASIC);
+    AwesomeValidation valid2 = new AwesomeValidation(BASIC);
     TextView tv_reg,tvBack;
     EditText editTextUserName,editTextUserEmail,editTextPassword,editTextConfirmPassword;
     Button btnRegister;
@@ -48,8 +48,8 @@ public class RegisterActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_main);
 
-        valid.addValidation(RegisterActivity.this, R.id.regEtEmail, Patterns.EMAIL_ADDRESS, R.string.invalidEmail);
-        valid.addValidation(RegisterActivity.this, R.id.regEtName, "[a-zA-Z\\s]+", R.string.invalidName);
+        valid1.addValidation(RegisterActivity.this, R.id.regEtEmail, Patterns.EMAIL_ADDRESS, R.string.invalidEmail);
+        valid2.addValidation(RegisterActivity.this, R.id.regEtName, "[a-zA-Z\\s]+", R.string.invalidName);
         // Get Refferences of Views
         editTextUserName=(EditText)findViewById(R.id.regEtName);
         editTextUserEmail =(EditText)findViewById(R.id.regEtEmail);
@@ -68,18 +68,21 @@ public class RegisterActivity extends Activity
                 dialogReg.setTitle("Registration dulu bro");
                 dialogReg.setMessage("Loading ...");
                 dialogReg.setProgress(0);
+
                 userName=editTextUserName.getText().toString();
                 email=editTextUserEmail.getText().toString();
                 password=editTextPassword.getText().toString();
                 confirmPassword=editTextConfirmPassword.getText().toString();
 
                 // check if any of the fields are vaccant
-                if (!valid.validate()) {
+                if (!valid1.validate()) {
                     editTextUserEmail.requestFocus();
-//                } else if (!validatePass1(password)) {
-//                    editTextPassword.setError("Invalid Password");
-//                    editTextPassword.requestFocus();
-                } else if (!confirmPassword.equals(password)) {
+                } else if (!valid2.validate()) {
+                    editTextUserName.requestFocus();
+                } else if (!validatePass1(editTextPassword.getText().toString())) {
+                    editTextPassword.setError("Invalid Password");
+                    editTextPassword.requestFocus();
+                } else if (!editTextConfirmPassword.getText().toString().equals(editTextPassword.getText().toString())) {
                     editTextConfirmPassword.setError("Invalid Password Confirmation");
                     editTextConfirmPassword.requestFocus();
                 } else {
@@ -162,9 +165,9 @@ public class RegisterActivity extends Activity
 
         // implement interface for add user
         User userPost = new User(userName,email,password,confirmPassword);
-        Gson gson2 = new Gson();
-        String json = gson2.toJson(userPost);
-        Log.e("CEKIDOT", json);
+//        Gson gson2 = new Gson();
+//        String json = gson2.toJson(userPost);
+//        Log.e("CEKIDOT", json);
         Call<User> call2 = user_api.saveUser(userPost);
 
         call2.enqueue(new Callback<User>() {
@@ -172,7 +175,7 @@ public class RegisterActivity extends Activity
             public void onResponse(Call<User> call, Response<User> response) {
                 int status2 = response.code();
                 dialogReg.dismiss();
-//                tv_reg.setText(String.valueOf(status2));
+                tv_reg.setText(String.valueOf(status2));
                 Toast.makeText(RegisterActivity.this, "registration success", Toast.LENGTH_LONG).show();
             }
 

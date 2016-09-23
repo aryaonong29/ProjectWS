@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -26,9 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
 public class MainActivity extends AppCompatActivity {
-//    public static final String MyPREFERENCES = "MyPrefs" ;
-//    public static final String Email = "emailKey";
-//    public static final String Password = "pwdKey";
     TextView tv_reg;
     String email,password;
     EditText homeEtEmail, homeEtPassword;
@@ -50,14 +48,12 @@ public class MainActivity extends AppCompatActivity {
         homeEtPassword=(EditText)findViewById(R.id.homeEtPassword);
 
         //shared preferences
-        getsp1 = this.getSharedPreferences("Login", MODE_PRIVATE);
-        if(!getsp1.getString("Email","").equals("")){
+        getsp1 = this.getSharedPreferences("login", MODE_PRIVATE);
+        if(!getsp1.getString("email","").equals("")){
             Intent i = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(i);
             finish();
         }
-
-
 
         valid.addValidation(MainActivity.this, R.id.homeEtEmail, Patterns.EMAIL_ADDRESS,R.string.invalidEmail);
         homeBtnLogin=(Button)findViewById(R.id.homeBtnLogin);
@@ -65,12 +61,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog = new ProgressDialog(MainActivity.this);
-                dialog.setTitle("Login on Process");
+                dialog.setTitle("Tunggu bentar bro!");
                 dialog.setMessage("Loading ...");
                 dialog.setProgress(0);
                 if (!valid.validate()) {
                     homeEtEmail.requestFocus();
                 } else {
+                    dialog.show();
                     getApi();
                 }
             }
@@ -125,20 +122,22 @@ public class MainActivity extends AppCompatActivity {
 //                Log.e("CEK", response.body().getUsers().toArray().toString());
                 //this extract data from retrofit with for() loop
                 for (Users.UserItem user : response.body().getUsers()) {
-//                    Log.e("CEK", String.valueOf(user.getEmail().toString().equals(homeEtEmail.getText().toString())));
-//                    Log.e("CEK", user.getEmail().toString());
-//                    Log.e("CEK", homeEtEmail.getText().toString());
+                    Log.e("CEK", String.valueOf(user.getEmail().toString().equals(homeEtEmail.getText().toString())));
+                    Log.e("CEK", user.getEmail().toString());
+                    Log.e("CEK", homeEtEmail.getText().toString());
                     login = false;
                     if (user.getEmail().toString().equals(homeEtEmail.getText().toString()) &&
                             user.getPassword().toString().equals(homeEtPassword.getText().toString())) {
                         Toast.makeText(MainActivity.this, "email and password valid", Toast.LENGTH_LONG).show();
                         login = true;
+
                         String email=user.getEmail();
                         String password=user.getPassword();
-                        SharedPreferences setsp1 = getSharedPreferences("Login", MODE_PRIVATE);
+
+                        SharedPreferences setsp1 = getSharedPreferences("login", MODE_PRIVATE);
                         SharedPreferences.Editor ed = setsp1.edit();
-                        ed.putString("Email", email);
-                        ed.putString("Password", password);
+                        ed.putString("email", email);
+                        ed.putString("password", password);
                         ed.commit();
 
 

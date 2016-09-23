@@ -1,6 +1,7 @@
 package com.arianasp.projectws;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,12 +34,13 @@ public class RegisterActivity extends Activity
 //    public static final String MyPREFERENCES = "MyPrefs" ;
 //    public static final String Email = "emailKey";
 //    public static final String Password = "pwdKey";
-    AwesomeValidation mAwesomeValidation = new AwesomeValidation(BASIC);
+    AwesomeValidation valid = new AwesomeValidation(BASIC);
     TextView tv_reg,tvBack;
     EditText editTextUserName,editTextUserEmail,editTextPassword,editTextConfirmPassword;
     Button btnRegister;
     String userName,email,password,confirmPassword;
     SharedPreferences sp;
+    ProgressDialog dialogReg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,8 +48,8 @@ public class RegisterActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_main);
 
-        mAwesomeValidation.addValidation(RegisterActivity.this, R.id.regEtEmail, Patterns.EMAIL_ADDRESS, R.string.invalidEmail);
-        mAwesomeValidation.addValidation(RegisterActivity.this, R.id.regEtName, "[a-zA-Z\\s]+", R.string.invalidName);
+        valid.addValidation(RegisterActivity.this, R.id.regEtEmail, Patterns.EMAIL_ADDRESS, R.string.invalidEmail);
+        valid.addValidation(RegisterActivity.this, R.id.regEtName, "[a-zA-Z\\s]+", R.string.invalidName);
         // Get Refferences of Views
         editTextUserName=(EditText)findViewById(R.id.regEtName);
         editTextUserEmail =(EditText)findViewById(R.id.regEtEmail);
@@ -62,20 +64,17 @@ public class RegisterActivity extends Activity
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-
+                dialogReg = new ProgressDialog(RegisterActivity.this);
+                dialogReg.setTitle("Registration dulu bro");
+                dialogReg.setMessage("Loading ...");
+                dialogReg.setProgress(0);
                 userName=editTextUserName.getText().toString();
                 email=editTextUserEmail.getText().toString();
                 password=editTextPassword.getText().toString();
                 confirmPassword=editTextConfirmPassword.getText().toString();
 
-//                SharedPreferences.Editor editor = sp.edit();
-//                editor.putString("Email", email).putString("Password", password);
-//                editor.commit();
-//                Log.e("tes1", String.valueOf(editor.putString("Email", email)));
-//                Log.e("tes2", String.valueOf(editor.putString("Password", password)));
-
                 // check if any of the fields are vaccant
-                if (!mAwesomeValidation.validate()) {
+                if (!valid.validate()) {
                     editTextUserEmail.requestFocus();
 //                } else if (!validatePass1(password)) {
 //                    editTextPassword.setError("Invalid Password");
@@ -85,8 +84,8 @@ public class RegisterActivity extends Activity
                     editTextConfirmPassword.requestFocus();
                 } else {
                     Toast.makeText(RegisterActivity.this, "Input Success", Toast.LENGTH_LONG).show();
-                    //getApi();
-                    postApi();
+                    dialogReg.show();
+                    getApi();
                 }
             }
         });
@@ -99,7 +98,7 @@ public class RegisterActivity extends Activity
     }
 
     protected boolean validatePass1(String pass1) {
-        if (pass1 != null && pass1.length() > 7) {
+        if (pass1 != null && pass1.length() > 4) {
             return true;
         } else {
             return false;
@@ -134,12 +133,17 @@ public class RegisterActivity extends Activity
                         Toast.makeText(RegisterActivity.this, "email already in use", Toast.LENGTH_LONG).show();
                         break;
                     }
+                    else{
+                        postApi();
+                        break;
+                    }
 //
                 }
             }
 
             @Override
             public void onFailure(Call<Users> call, Throwable t) {
+                dialogReg.dismiss();
                 tv_reg.setText(String.valueOf(t));
             }
         });
@@ -153,6 +157,7 @@ public class RegisterActivity extends Activity
                 .baseUrl("https://private-f6513-login312.apiary-mock.com/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
+
         final UserApi user_api = retrofit.create(UserApi.class);
 
         // implement interface for add user
@@ -165,13 +170,15 @@ public class RegisterActivity extends Activity
         call2.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-//                int status2 = response.code();
+                int status2 = response.code();
+                dialogReg.dismiss();
 //                tv_reg.setText(String.valueOf(status2));
                 Toast.makeText(RegisterActivity.this, "registration success", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<User> call2, Throwable t) {
+                dialogReg.dismiss();
                 tv_reg.setText(String.valueOf(t));
             }
         });

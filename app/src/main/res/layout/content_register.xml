@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background2"
     android:orientation="vertical"
-    tools:showIn="@layout/activity_main"
     tools:context="com.arianasp.projectws.MainActivity">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +14,7 @@
         android:background="@drawable/background0">
 
         <TextView
-            style="@style/tvLogin" />
+            style="@style/tvRegister" />
 
     </LinearLayout>
 
@@ -29,20 +26,39 @@
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
-            style="@style/homeEtEmail">
+            style="@style/regEtName">
 
             <EditText
-                android:id="@+id/homeEtEmail"
-                style="@style/homeEtEmail"/>
+                android:id="@+id/regEtName"
+                style="@style/regEtName"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/regEtEmail">
+
+            <EditText
+                android:id="@+id/regEtEmail"
+                style="@style/regEtEmail"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            style="@style/homeEtPassword">
+            style="@style/regEtPassword">
 
             <EditText
-                android:id="@+id/homeEtPassword"
-                style="@style/homeEtPassword"/>
+                android:id="@+id/regEtPassword"
+                style="@style/regEtPassword"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/regEtConfPassword">
+
+            <EditText
+                android:id="@+id/regEtConfPassword"
+                style="@style/regEtConfPassword"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -56,12 +72,13 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/homeBtnLogin"
-            style="@style/homeBtnLogin"/>
+            android:id="@+id/btnReg"
+            style="@style/regBtn"/>
 
         <TextView
-            android:id="@+id/tv_reg"
-            style="@style/tvReg" />
+            android:id="@+id/tv_back"
+            style="@style/tvBack"/>
+
 
     </LinearLayout>
 
